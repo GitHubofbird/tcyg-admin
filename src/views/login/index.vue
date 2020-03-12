@@ -57,9 +57,13 @@ export default {
           login(this.loginInfo).then((data) => {
             if (data.code === 110) {
               this.$message.success(data.message)
-              this.$router.push({ path: '/' })
+              this.$router.push({ path: '/home' })
+            } else {
+              this.$message.success(data.message)
             }
-          })
+          }).catch(
+            this.$message.fail('用户名或密码错误')
+          )
         } else {
           console.log('error submit!!')
           return false
