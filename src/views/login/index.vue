@@ -32,6 +32,7 @@
   </div>
 </template>
 <script>
+import { login } from '../../api/index'
 export default {
   data: function () {
     return {
@@ -53,7 +54,12 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          login(this.loginInfo).then((data) => {
+            if (data.code === 110) {
+              this.$message.success(data.message)
+              this.$router.push({ path: '/' })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
