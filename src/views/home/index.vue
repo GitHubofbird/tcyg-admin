@@ -19,13 +19,13 @@
                   width="200px">
           <el-menu :default-openeds="['1']"
                    background-color="#252526"
-                   text-color=" #e2b462">
+                   text-color=" #e2b462"
+                   :router="true">
             <el-submenu index="1">
               <template slot="title"><i class="el-icon-user-solid"></i>用户管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="1-1"
-                              @click="findAllUser()"><i class="el-icon-menu"></i>所有用户</el-menu-item>
+                              index="/user"><i class="el-icon-menu"></i>所有用户</el-menu-item>
                 <el-menu-item class="menu-item"
                               index="1-2"><i class="el-icon-menu"></i>普通用户</el-menu-item>
                 <el-menu-item class="menu-item"
@@ -65,7 +65,9 @@
             </el-submenu>
           </el-menu>
         </el-aside>
-        <el-main class="home-container-main">Main</el-main>
+        <el-main class="home-container-main">
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
 
@@ -75,7 +77,20 @@
 export default {
   data () {
     return {
-      username: '姑苏'
+
+    }
+  },
+  computed: {
+    username () {
+      return this.$store.state.username
+    }
+  },
+  beforeCreate () {
+    const token = this.$store.state.token
+    console.log(token)
+    if (!token) {
+      this.$message.warning('您好,请登录!')
+      this.$router.push({ path: '/' })
     }
   }
 }
@@ -83,6 +98,7 @@ export default {
 <style scoped>
 .home {
   height: 100%;
+  min-width: 1400px;
 }
 .home-container {
   height: 100%;
@@ -112,6 +128,5 @@ export default {
 }
 .home-container .home-container-main {
   background-color: #1e1e1e;
-  color: #52b9fe;
 }
 </style>

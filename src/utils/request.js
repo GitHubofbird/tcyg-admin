@@ -14,12 +14,14 @@ service.interceptors.request.use(config => {
   nProgress.start()
   return config
 }, error => {
+  nProgress.done()
+  Message.error('系统异常')
   Promise.reject(error)
 })
 service.interceptors.response.use(
   response => {
     if (response.status !== 200) {
-      Message.fail('系统异常')
+      Message.error('系统异常')
       // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject('error')
     } else {

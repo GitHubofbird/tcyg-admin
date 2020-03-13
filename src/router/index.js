@@ -13,7 +13,14 @@ export default new Router({
     {
       path: '/home',
       name: 'index',
-      component: () => import('@/views/home')
+      component: () => import('@/views/home'),
+      children: [
+        {
+          path: '/user',
+          name: 'user',
+          component: () => import('@/views/user')
+        }
+      ]
     }
   ]
 })

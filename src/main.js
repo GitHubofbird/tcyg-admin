@@ -8,7 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/base.css'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-
+import store from '@/store'
 Vue.config.productionTip = false
 Vue.use(NProgress)
 Vue.use(ElementUI)
@@ -16,6 +16,7 @@ Vue.use(ElementUI)
 new Vue({
   el: '#app',
   router,
+  store: store,
   components: { App },
   template: '<App/>'
 })

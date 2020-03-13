@@ -57,13 +57,16 @@ export default {
           login(this.loginInfo).then((data) => {
             if (data.code === 110) {
               this.$message.success(data.message)
+              this.$store.commit('token', data.data)
+              this.$store.commit('username', this.loginInfo.username)
               this.$router.push({ path: '/home' })
             } else {
               this.$message.success(data.message)
             }
-          }).catch(
-            this.$message.fail('用户名或密码错误')
-          )
+            // eslint-disable-next-line handle-callback-err
+          }).catch(err => {
+            this.$message.error(err)
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -79,6 +82,7 @@ export default {
 <style scoped>
 .login-container {
   width: 100%;
+  min-width: 1400px;
   height: 100%;
   position: absolute;
   top: 0;
