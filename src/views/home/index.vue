@@ -25,42 +25,38 @@
               <template slot="title"><i class="el-icon-user-solid"></i>用户管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="/user"><i class="el-icon-menu"></i>所有用户</el-menu-item>
-                <el-menu-item class="menu-item"
-                              index="1-2"><i class="el-icon-menu"></i>普通用户</el-menu-item>
-                <el-menu-item class="menu-item"
-                              index="1-3"><i class="el-icon-menu"></i>加盟商家</el-menu-item>
-                <el-menu-item class="menu-item"
-                              index="1-4"><i class="el-icon-menu"></i>商城会员</el-menu-item>
-                <el-menu-item class="menu-item"
-                              index="1-5"><i class="el-icon-menu"></i>系统用户</el-menu-item>
+                              index="/user"><i class="el-icon-menu"></i>用户列表</el-menu-item>
+
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="2">
               <template slot="title"><i class="el-icon-shopping-bag-1"></i>商品管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="2-1"><i class="el-icon-menu"></i>选项1</el-menu-item>
-                <el-menu-item class="menu-item"
-                              index="2-2"><i class="el-icon-menu"></i>选项2</el-menu-item>
+                              index="2-1"><i class="el-icon-menu"></i>商品列表</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="3">
               <template slot="title"><i class="el-icon-notebook-2"></i>分类管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="3-1"><i class="el-icon-menu"></i>一级分类</el-menu-item>
+                              index="/category"><i class="el-icon-menu"></i>一级分类</el-menu-item>
                 <el-menu-item class="menu-item"
-                              index="3-2"><i class="el-icon-menu"></i>二级分类</el-menu-item>
+                              index="/secondCategory"><i class="el-icon-menu"></i>二级分类</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="4">
               <template slot="title"><i class="el-icon-setting"></i>角色管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="4-1"><i class="el-icon-menu"></i>一级分类</el-menu-item>
+                              index="4-1"><i class="el-icon-menu"></i>角色列表</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="5">
+              <template slot="title"><i class="el-icon-setting"></i>订单管理</template>
+              <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="4-2"><i class="el-icon-menu"></i>二级分类</el-menu-item>
+                              index="5-1"><i class="el-icon-menu"></i>订单列表</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>

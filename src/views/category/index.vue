@@ -3,8 +3,8 @@
     <!-- 1.面包屑 -->
     <el-breadcrumb separator-class="box-card-breadcrumb el-icon-arrow-right">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+      <el-breadcrumb-item>分类管理</el-breadcrumb-item>
+      <el-breadcrumb-item>一级分类</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 2.搜索框 -->
     <el-row class="box-card-search-row">
@@ -17,7 +17,7 @@
                      icon="el-icon-search"></el-button>
         </el-input>
         <el-button type="primary"
-                   class="box-card-search-row-btn">添加用户</el-button>
+                   class="box-card-search-row-btn">添加分类</el-button>
       </el-col>
     </el-row>
     <!-- 3.表格 -->
@@ -30,31 +30,17 @@
                        type="index"
                        width="50px"
                        align="center"></el-table-column>
-      <el-table-column prop="username"
-                       label="用户账号"
+      <el-table-column prop="cname"
+                       label="分类名称"
                        align="center">
       </el-table-column>
-      <el-table-column prop="name"
-                       label="用户姓名"
-                       align="center">
-      </el-table-column>
-      <el-table-column prop="sex"
-                       label="用户性别"
-                       align="center">
-      </el-table-column>
-      <el-table-column prop="phone"
-                       label="用户电话"
-                       align="center"></el-table-column>
-      <el-table-column prop="email"
-                       label="用户邮箱"
-                       align="center"></el-table-column>
-      <el-table-column label="用户状态"
+      <!-- <el-table-column label="用户状态"
                        align="center">
         <el-switch v-model="value"
                    active-color="#13ce66"
                    inactive-color="#ff4949">
         </el-switch>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="操作"
                        align="center">
         <el-button icon="el-icon-search"
@@ -70,7 +56,7 @@
                    icon="el-icon-delete"
                    circle
                    size="small"
-                   @click="deleteUser"></el-button>
+                   @click="deleteCategory"></el-button>
       </el-table-column>
     </el-table>
     <!-- 4.分页 -->
@@ -80,44 +66,18 @@
                    :total="tableData.length">
     </el-pagination>
     <!-- 5.Drawer抽屉 -->
-    <el-drawer title="我是标题"
-               :visible.sync="show"
+    <el-drawer :visible.sync="show"
                :with-header="false">
-      <el-form :model="currentUser"
+      <el-form :model="currentCategory"
                label-width="100px"
                status-icon
                size="medium"
                style="margin:50px 20px"
                :disabled="disabled">
-        <el-form-item prop="username"
-                      label="用户账号">
-          <el-input v-model="currentUser.username"
+        <el-form-item prop="cname"
+                      label="分类名称">
+          <el-input v-model="currentCategory.cname"
                     placeholder="请输入用户名"></el-input>
-        </el-form-item>
-        <el-form-item label="用户实名"
-                      prop="name">
-          <el-input v-model="currentUser.name"
-                    placeholder="请输入真实姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="用户性别"
-                      prop="sex">
-          <el-input v-model="currentUser.sex"
-                    placeholder="请输入性别"></el-input>
-        </el-form-item>
-        <el-form-item label="用户邮箱"
-                      prop="email">
-          <el-input v-model="currentUser.email"
-                    placeholder="请输入邮箱"></el-input>
-        </el-form-item>
-        <el-form-item label="用户电话"
-                      prop="phone">
-          <el-input v-model="currentUser.phone"
-                    placeholder="请输入电话"></el-input>
-        </el-form-item>
-        <el-form-item label="收货地址"
-                      prop="address">
-          <el-input v-model="currentUser.address"
-                    placeholder="请输入收货地址"></el-input>
         </el-form-item>
         <el-form-item style="margin-top:240px;float:left"
                       v-if="!disabled">
@@ -131,7 +91,7 @@
   </el-card>
 </template>
 <script>
-import { findAllUser, updateUser, deleteUser } from '../../api/index'
+import { getCategoryList, updateCategory, deleteCategory } from '../../api/index'
 export default {
   data () {
     return {
@@ -140,12 +100,12 @@ export default {
       disabled: false,
       tableData: [],
       value: true,
-      currentUser: {}
+      currentCategory: {}
 
     }
   },
   mounted () {
-    findAllUser().then(data => {
+    getCategoryList().then(data => {
       if (data.code === 200) {
         this.tableData = data.data
       } else {
@@ -161,16 +121,16 @@ export default {
       this.edit = true
     },
     getDetails (row) {
-      this.currentUser = row
-      console.log(this.currentUser)
+      this.currentCategory = row
+      console.log(this.currentCategory)
     },
-    deleteUser () {
+    deleteCategroy () {
       this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteUser(this.currentUser).then((data) => {
+        deleteCategory(this.currentCategory).then((data) => {
           this.$message.success(data.data)
         })
       }).catch(() => {
@@ -181,8 +141,8 @@ export default {
       })
       this.findAllUser()
     },
-    submitForm (currentUser) {
-      updateUser(currentUser).then((data) => {
+    submitForm (currentCategory) {
+      updateCategory(currentCategory).then((data) => {
         // console.log(data.data.data)
         this.show = false
         this.$message.success(data.data)

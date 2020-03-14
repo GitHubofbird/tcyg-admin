@@ -19,6 +19,16 @@ export default new Router({
           path: '/user',
           name: 'user',
           component: () => import('@/views/user')
+        },
+        {
+          path: '/category',
+          name: 'category',
+          component: () => import('@/views/category')
+        },
+        {
+          path: '/secondCategory',
+          name: 'secondCategory',
+          component: () => import('@/views/secondCategory')
         }
       ]
     }
