@@ -112,19 +112,22 @@ export default {
     }
   },
   mounted () {
-    // 查询所有分类
-    getCategoryList().then(data => {
-      if (data.code === 200) {
-        this.tableData = data.data
-      } else {
-        this.$message.error('查询失败')
-      }
-      // eslint-disable-next-line handle-callback-err
-    }).catch(err => {
-      this.$message.error('系统异常')
-    })
+    this.findAllCategory()
   },
   methods: {
+    // 查询所有分类
+    findAllCategory () {
+      getCategoryList().then(data => {
+        if (data.code === 200) {
+          this.tableData = data.data
+        } else {
+          this.$message.error('查询失败')
+        }
+        // eslint-disable-next-line handle-callback-err
+      }).catch(err => {
+        this.$message.error('系统异常')
+      })
+    },
     // 获取表格当前行数据
     getDetails (row) {
       this.currentCategory = row
@@ -138,7 +141,10 @@ export default {
         type: 'warning'
       }).then(() => {
         deleteCategory(this.currentCategory).then((data) => {
-          this.$message.success(data.data)
+          if (data.code === 200) {
+            this.$message.success(data.data)
+            this.findAllCategory()
+          }
         })
       }).catch(() => {
         this.$message({
@@ -146,18 +152,21 @@ export default {
           message: '已取消删除'
         })
       })
-      this.findAllUser()
     },
-    // 修改分类
+    // 提交表单
     submitForm (currentCategory) {
       updateCategory(currentCategory).then((data) => {
         // console.log(data.data.data)
-        this.show = false
-        this.isAdd = false
-        this.$message.success(data.data)
+        if (data.code === 200) {
+          this.show = false
+          this.isAdd = false
+          this.$message.success(data.data)
+          this.findAllCategory()
+        }
       })
+      this.findAllCategory()
     },
-    // 添加分类
+    // 显示添加分类
     addCategroy () {
       this.show = true
       this.disabled = false

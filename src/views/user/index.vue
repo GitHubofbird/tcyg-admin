@@ -145,25 +145,32 @@ export default {
     }
   },
   mounted () {
-    findAllUser().then(data => {
-      if (data.code === 200) {
-        this.tableData = data.data
-      } else {
-        this.$message.error('查询失败')
-      }
-      // eslint-disable-next-line handle-callback-err
-    }).catch(err => {
-      this.$message.error('系统异常')
-    })
+    this.findAllUser()
   },
   methods: {
+    // 查询所有用户
+    findAllUser () {
+      findAllUser().then(data => {
+        if (data.code === 200) {
+          this.tableData = data.data
+        } else {
+          this.$message.error('查询失败')
+        }
+        // eslint-disable-next-line handle-callback-err
+      }).catch(err => {
+        this.$message.error('系统异常')
+      })
+    },
+    // 显示修改用户信息组件
     editUser (index) {
       this.edit = true
     },
+    // 获取当且行
     getDetails (row) {
       this.currentUser = row
       console.log(this.currentUser)
     },
+    // 删除用户
     deleteUser () {
       this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -171,7 +178,10 @@ export default {
         type: 'warning'
       }).then(() => {
         deleteUser(this.currentUser).then((data) => {
-          this.$message.success(data.data)
+          if (data.code === 200) {
+            this.$message.success(data.data)
+            this.findAllUser()
+          }
         })
       }).catch(() => {
         this.$message({
@@ -181,11 +191,15 @@ export default {
       })
       this.findAllUser()
     },
+    // 提交表单,用于用户的添加和修改
     submitForm (currentUser) {
       updateUser(currentUser).then((data) => {
         // console.log(data.data.data)
-        this.show = false
-        this.$message.success(data.data)
+        if (data.code === 200) {
+          this.show = false
+          this.$message.success(data.data)
+          this.findAllUser()
+        }
       })
     }
   }

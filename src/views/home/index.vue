@@ -22,18 +22,18 @@
                    :router="true"
                    :unique-opened="true">
             <el-submenu index="1">
+              <template slot="title"><i class="el-icon-setting"></i>角色管理</template>
+              <el-menu-item-group>
+                <el-menu-item class="menu-item"
+                              index="/rule"><i class="el-icon-menu"></i>角色列表</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="2">
               <template slot="title"><i class="el-icon-user-solid"></i>用户管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
                               index="/user"><i class="el-icon-menu"></i>用户列表</el-menu-item>
 
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title"><i class="el-icon-shopping-bag-1"></i>商品管理</template>
-              <el-menu-item-group>
-                <el-menu-item class="menu-item"
-                              index="/product"><i class="el-icon-menu"></i>商品列表</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="3">
@@ -46,12 +46,13 @@
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="4">
-              <template slot="title"><i class="el-icon-setting"></i>角色管理</template>
+              <template slot="title"><i class="el-icon-shopping-bag-1"></i>商品管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="/rule"><i class="el-icon-menu"></i>角色列表</el-menu-item>
+                              index="/product"><i class="el-icon-menu"></i>商品列表</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
+
             <el-submenu index="5">
               <template slot="title"><i class="el-icon-setting"></i>订单管理</template>
               <el-menu-item-group>

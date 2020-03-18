@@ -29,5 +29,5 @@ export function getSecondCategoryList () {
 }
 
 export function searchByName (searchInfo) {
-  return request.post('/category/search', searchInfo)
+  return request.post('/category/searchByName', searchInfo)
 }
