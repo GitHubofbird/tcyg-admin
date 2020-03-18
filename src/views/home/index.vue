@@ -8,7 +8,7 @@
           </el-col>
           <el-col :span="2">
             <div class="home-container-header-msg">
-              <span>退出</span>
+              <span @click="handleLoginout">退出</span>
               <span>{{username}}</span>
             </div>
           </el-col>
@@ -17,10 +17,10 @@
       <el-container>
         <el-aside class="home-container-aside"
                   width="200px">
-          <el-menu :default-openeds="['1']"
-                   background-color="#252526"
+          <el-menu background-color="#252526"
                    text-color=" #e2b462"
-                   :router="true">
+                   :router="true"
+                   :unique-opened="true">
             <el-submenu index="1">
               <template slot="title"><i class="el-icon-user-solid"></i>用户管理</template>
               <el-menu-item-group>
@@ -33,7 +33,7 @@
               <template slot="title"><i class="el-icon-shopping-bag-1"></i>商品管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="2-1"><i class="el-icon-menu"></i>商品列表</el-menu-item>
+                              index="/product"><i class="el-icon-menu"></i>商品列表</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="3">
@@ -49,14 +49,14 @@
               <template slot="title"><i class="el-icon-setting"></i>角色管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="4-1"><i class="el-icon-menu"></i>角色列表</el-menu-item>
+                              index="/rule"><i class="el-icon-menu"></i>角色列表</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="5">
               <template slot="title"><i class="el-icon-setting"></i>订单管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
-                              index="5-1"><i class="el-icon-menu"></i>订单列表</el-menu-item>
+                              index="/order"><i class="el-icon-menu"></i>订单列表</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>
@@ -87,6 +87,13 @@ export default {
     if (!token) {
       this.$message.warning('您好,请登录!')
       this.$router.push({ path: '/' })
+    }
+  },
+  methods: {
+    handleLoginout () {
+      this.$store.commit('token', '')
+      this.$router.push({ path: '/' })
+      this.$message.success('退出成功')
     }
   }
 }

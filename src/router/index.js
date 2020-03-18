@@ -29,6 +29,21 @@ export default new Router({
           path: '/secondCategory',
           name: 'secondCategory',
           component: () => import('@/views/secondCategory')
+        },
+        {
+          path: '/product',
+          name: 'product',
+          component: () => import('@/views/product')
+        },
+        {
+          path: '/order',
+          name: 'order',
+          component: () => import('@/views/order')
+        },
+        {
+          path: '/rule',
+          name: 'rule',
+          component: () => import('@/views/rule')
         }
       ]
     }

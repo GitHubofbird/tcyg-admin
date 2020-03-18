@@ -24,3 +24,10 @@ export function updateCategory (category) {
 export function insertCategory (category) {
   return request.post('/category/insertCategory', category)
 }
+export function getSecondCategoryList () {
+  return request.get('/secondCategory/listSecondCategory')
+}
+
+export function searchByName (searchInfo) {
+  return request.post('/category/search', searchInfo)
+}

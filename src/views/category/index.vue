@@ -14,10 +14,12 @@
                   class="box-card-search-row-input">
 
           <el-button slot="append"
-                     icon="el-icon-search"></el-button>
+                     icon="el-icon-search"
+                     @click="handleSearch"></el-button>
         </el-input>
         <el-button type="primary"
-                   class="box-card-search-row-btn">添加分类</el-button>
+                   class="box-card-search-row-btn"
+                   @click="addCategroy">添加分类</el-button>
       </el-col>
     </el-row>
     <!-- 3.表格 -->
@@ -77,25 +79,30 @@
         <el-form-item prop="cname"
                       label="分类名称">
           <el-input v-model="currentCategory.cname"
-                    placeholder="请输入用户名"></el-input>
+                    placeholder="请输入分类名称"></el-input>
         </el-form-item>
-        <el-form-item style="margin-top:240px;float:left"
+        <el-form-item style="margin-top:540px;float:left"
                       v-if="!disabled">
           <el-button type="primary"
                      @click="show = false">取消</el-button>
           <el-button type="info"
-                     @click="submitForm(currentUser)">修改</el-button>
+                     @click="submitForm(currentCategory)"
+                     v-if="!isAdd">修改</el-button>
+          <el-button type="info"
+                     @click="submitForm(currentCategory)"
+                     v-if="isAdd">添加</el-button>
         </el-form-item>
       </el-form>
     </el-drawer>
   </el-card>
 </template>
 <script>
-import { getCategoryList, updateCategory, deleteCategory } from '../../api/index'
+import { getCategoryList, updateCategory, deleteCategory, searchByName } from '../../api/index'
 export default {
   data () {
     return {
       searchInfo: '',
+      isAdd: false,
       show: false,
       disabled: false,
       tableData: [],
@@ -105,6 +112,7 @@ export default {
     }
   },
   mounted () {
+    // 查询所有分类
     getCategoryList().then(data => {
       if (data.code === 200) {
         this.tableData = data.data
@@ -117,14 +125,13 @@ export default {
     })
   },
   methods: {
-    editUser (index) {
-      this.edit = true
-    },
+    // 获取表格当前行数据
     getDetails (row) {
       this.currentCategory = row
       console.log(this.currentCategory)
     },
-    deleteCategroy () {
+    // 删除分类
+    deleteCategory () {
       this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -141,11 +148,30 @@ export default {
       })
       this.findAllUser()
     },
+    // 修改分类
     submitForm (currentCategory) {
       updateCategory(currentCategory).then((data) => {
         // console.log(data.data.data)
         this.show = false
+        this.isAdd = false
         this.$message.success(data.data)
+      })
+    },
+    // 添加分类
+    addCategroy () {
+      this.show = true
+      this.disabled = false
+      this.isAdd = true
+      this.currentCategory = {}
+    },
+    // 模糊查询
+    handleSearch () {
+      searchByName(this.searchInfo).then(data => {
+        if (data.code === 200) {
+          this.tableData = data.data
+        } else {
+          this.$message.error('查询失败')
+        }
       })
     }
   }
