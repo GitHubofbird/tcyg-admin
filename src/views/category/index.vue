@@ -48,12 +48,12 @@
         <el-button icon="el-icon-search"
                    circle
                    size="small"
-                   @click="show = true; disabled = true"></el-button>
+                   @click="showDetails"></el-button>
         <el-button type="primary"
                    icon="el-icon-edit"
                    circle
                    size="small"
-                   @click="show = true; disabled = false"></el-button>
+                   @click="showUpdatePage"></el-button>
         <el-button type="danger"
                    icon="el-icon-delete"
                    circle
@@ -144,6 +144,8 @@ export default {
           if (data.code === 200) {
             this.$message.success(data.data)
             this.findAllCategory()
+          } else {
+            this.$message.success(data.data)
           }
         })
       }).catch(() => {
@@ -159,7 +161,6 @@ export default {
         // console.log(data.data.data)
         if (data.code === 200) {
           this.show = false
-          this.isAdd = false
           this.$message.success(data.data)
           this.findAllCategory()
         }
@@ -172,6 +173,17 @@ export default {
       this.disabled = false
       this.isAdd = true
       this.currentCategory = {}
+    },
+    // 显示详情
+    showDetails () {
+      this.show = true
+      this.disabled = true
+    },
+    // 显示修改页面
+    showUpdatePage () {
+      this.show = true
+      this.disabled = false
+      this.isAdd = false
     },
     // 模糊查询
     handleSearch () {

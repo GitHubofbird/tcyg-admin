@@ -165,10 +165,10 @@ export default {
     editUser (index) {
       this.edit = true
     },
-    // 获取当且行
+    // 获取当且行数据
     getDetails (row) {
       this.currentUser = row
-      console.log(this.currentUser)
+      // console.log(this.currentUser)
     },
     // 删除用户
     deleteUser () {
@@ -180,6 +180,7 @@ export default {
         deleteUser(this.currentUser).then((data) => {
           if (data.code === 200) {
             this.$message.success(data.data)
+            // 删除成功后重新查询用户
             this.findAllUser()
           }
         })
@@ -189,14 +190,13 @@ export default {
           message: '已取消删除'
         })
       })
-      this.findAllUser()
     },
     // 提交表单,用于用户的添加和修改
     submitForm (currentUser) {
       updateUser(currentUser).then((data) => {
         // console.log(data.data.data)
         if (data.code === 200) {
-          this.show = false
+          this.show = false// 数据提交成功关闭抽屉
           this.$message.success(data.data)
           this.findAllUser()
         }
