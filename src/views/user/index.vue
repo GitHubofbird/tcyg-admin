@@ -17,7 +17,8 @@
                      icon="el-icon-search"></el-button>
         </el-input>
         <el-button type="primary"
-                   class="box-card-search-row-btn">添加用户</el-button>
+                   class="box-card-search-row-btn"
+                   @click="addUser">添加用户</el-button>
       </el-col>
     </el-row>
     <!-- 3.表格 -->
@@ -60,12 +61,12 @@
         <el-button icon="el-icon-search"
                    circle
                    size="small"
-                   @click="show = true; disabled = true"></el-button>
+                   @click="showUserDetails"></el-button>
         <el-button type="primary"
                    icon="el-icon-edit"
                    circle
                    size="small"
-                   @click="show = true; disabled = false"></el-button>
+                   @click="editUser"></el-button>
         <el-button type="danger"
                    icon="el-icon-delete"
                    circle
@@ -114,6 +115,18 @@
           <el-input v-model="currentUser.phone"
                     placeholder="请输入电话"></el-input>
         </el-form-item>
+        <el-form-item label="用户角色">
+          <el-select v-model="currentUser.role"
+                     placeholder="请选择用户角色"
+                     value-key="roleId"
+                     style="width:100%">
+            <el-option v-for="(item,index) in currentRules"
+                       :key="index"
+                       :label="item.roleName"
+                       :value="item">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="收货地址"
                       prop="address">
           <el-input v-model="currentUser.address"
@@ -123,15 +136,16 @@
                       v-if="!disabled">
           <el-button type="primary"
                      @click="show = false">取消</el-button>
+
           <el-button type="info"
-                     @click="submitForm(currentUser)">修改</el-button>
+                     @click="submitForm(currentUser)"><span v-if="!isAdd">修改</span><span v-else-if="isAdd">添加</span></el-button>
         </el-form-item>
       </el-form>
     </el-drawer>
   </el-card>
 </template>
 <script>
-import { findAllUser, updateUser, deleteUser } from '../../api/index'
+import { findAllUser, updateUser, deleteUser, getRuleList } from '../../api/index'
 export default {
   data () {
     return {
@@ -140,7 +154,9 @@ export default {
       disabled: false,
       tableData: [],
       value: true,
-      currentUser: {}
+      currentUser: {},
+      isAdd: false,
+      currentRules: []
 
     }
   },
@@ -163,7 +179,10 @@ export default {
     },
     // 显示修改用户信息组件
     editUser (index) {
-      this.edit = true
+      this.isAdd = false
+      this.show = true
+      this.disabled = false
+      this.findAllRule()
     },
     // 获取当且行数据
     getDetails (row) {
@@ -199,6 +218,28 @@ export default {
           this.show = false// 数据提交成功关闭抽屉
           this.$message.success(data.data)
           this.findAllUser()
+        }
+      })
+    },
+    // 显示用户详情
+    showUserDetails () {
+      this.show = true
+      this.disabled = true
+    },
+    // 显示添加用户抽屉
+    addUser () {
+      this.disabled = false
+      this.show = true
+      this.isAdd = true
+      this.findAllRule()
+      this.currentUser = {}
+    },
+    findAllRule () {
+      getRuleList().then(data => {
+        if (data.code === 200) {
+          this.currentRules = data.data
+        } else {
+          this.$message.error('获取角色列表失败!')
         }
       })
     }

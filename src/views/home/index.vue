@@ -92,6 +92,7 @@ export default {
   },
   methods: {
     handleLoginout () {
+      window.sessionStorage.clear()
       this.$store.commit('token', '')
       this.$router.push({ path: '/' })
       this.$message.success('退出成功')

@@ -1,5 +1,5 @@
 import request from '../utils/request'
-
+// 用户API
 export function login (loginInfo) {
   return request.post('/user/login', loginInfo)
 }
@@ -12,6 +12,7 @@ export function updateUser (user) {
 export function deleteUser (user) {
   return request.post('/user/deleteUser', user)
 }
+// 一级分类API
 export function getCategoryList () {
   return request.get('/category/listCategories')
 }
