@@ -45,11 +45,11 @@
                        align="center">
       </el-table-column>
       <el-table-column prop="oldPrice"
-                       label="商品价格"
+                       label="历史价格"
                        align="center">
       </el-table-column>
       <el-table-column prop="newPrice"
-                       label="优惠价"
+                       label="商品现价"
                        align="center">
       </el-table-column>
       <el-table-column prop="stock"
@@ -89,38 +89,52 @@
                status-icon
                size="medium"
                style="margin:50px 20px"
-               :disabled="disabled">
+               :disabled="disabled"
+               :rules="rules"
+               ref="currentProduct">
         <el-form-item prop="name"
                       label="商品名称">
           <el-input v-model="currentProduct.name"
                     placeholder="请输入商品名称"></el-input>
+
         </el-form-item>
         <el-form-item prop="oldPrice"
-                      label="商品价格">
+                      label="历史价格">
           <el-input v-model="currentProduct.oldPrice"
-                    placeholder="请输入商品价格"></el-input>
+                    placeholder="请输入商品价格"
+                    type="number">
+            <template slot="append">元</template></el-input>
+
         </el-form-item>
         <el-form-item prop="newPrice"
-                      label="优惠价格">
+                      label="商品现价">
           <el-input v-model="currentProduct.newPrice"
-                    placeholder="请输入商品优惠价格"></el-input>
+                    placeholder="请输入商品优惠价格"
+                    type="number">
+            <template slot="append">元</template></el-input>
+
         </el-form-item>
         <el-form-item prop="stock"
                       label="商品库存">
           <el-input v-model="currentProduct.stock"
-                    placeholder="请输入商品库存"></el-input>
+                    placeholder="请输入商品库存"
+                    type="number">
+            <template slot="append">件/个</template></el-input>
         </el-form-item>
         <el-form-item v-if="currentProduct.salesVolume"
                       prop="salesVolume"
                       label="商品销量">
           <el-input v-model="currentProduct.salesVolume"
-                    placeholder="请输入商品库存"></el-input>
+                    placeholder="请输入商品库存"
+                    disabled="true">
+            <template slot="append">件/个</template></el-input>
         </el-form-item>
         <el-form-item label="所属分类">
           <el-select v-model="currentProduct.secondCategory"
                      placeholder="请选择分类"
                      value-key="scId"
-                     style="width:100%">
+                     style="width:100%"
+                     filterable>
             <el-option v-for="(item,index) in SecondCategories"
                        :key="index"
                        :label="item.scName"
@@ -170,7 +184,7 @@
   </el-card>
 </template>
 <script>
-import { searchByName, getProductList, deleteProduct, updateProduct, getSecondCategoryList } from '../../api/index'
+import { searchProductByName, getProductList, deleteProduct, updateProduct, getSecondCategoryList } from '../../api/index'
 export default {
   data () {
     return {
@@ -180,9 +194,30 @@ export default {
       disabled: false,
       tableData: [],
       value: true,
-      currentProduct: {},
-      SecondCategories: []
+      currentProduct: {
 
+      },
+      SecondCategories: [],
+      rules: {
+        name: [
+          { required: true, message: '请输入商品名称', trigger: 'blur' }
+        ],
+        oldPrice: [
+          { required: false, message: '请输入商品价格', trigger: 'blur' }
+
+        ],
+        newPrice: [
+          { required: true, message: '请输入商品优惠价', trigger: 'blur' }
+
+        ],
+        stock: [
+          { required: true, message: '请输入商品库存', trigger: 'blur' }
+
+        ],
+        description: [
+          { required: false, message: '请输入商品描述', trigger: 'blur' }
+        ]
+      }
     }
   },
   mounted () {
@@ -215,7 +250,7 @@ export default {
     },
     // 模糊查询
     handleSearch () {
-      searchByName(this.searchInfo).then(data => {
+      searchProductByName(this.searchInfo).then(data => {
         if (data.code === 200) {
           this.tableData = data.data
         }

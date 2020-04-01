@@ -12,6 +12,9 @@ export function updateUser (user) {
 export function deleteUser (user) {
   return request.post('/user/deleteUser', user)
 }
+export function searchUserByName (searchInfo) {
+  return request.get('/user/searchByName?searchInfo=' + searchInfo)
+}
 // 一级分类API
 export function getCategoryList () {
   return request.get('/category/listCategories')
@@ -25,8 +28,8 @@ export function updateCategory (category) {
 export function insertCategory (category) {
   return request.post('/category/insertCategory', category)
 }
-export function searchByName (searchInfo) {
-  return request.post('/category/searchByName', searchInfo)
+export function searchCategoryByName (searchInfo) {
+  return request.get('/category/searchByName?searchInfo=' + searchInfo)
 }
 // 用户权限API
 export function getRuleList () {
@@ -42,7 +45,7 @@ export function insertRule (role) {
   return request.post('/role/addRule', role)
 }
 export function searchRuleByName (searchInfo) {
-  return request.post('/role/searchByName', searchInfo)
+  return request.get('/role/searchByName?searchInfo=' + searchInfo)
 }
 
 // 二级分类API
@@ -59,7 +62,7 @@ export function insertSecondCategory (secondCategory) {
   return request.post('/secondCategory/addSecondCategory', secondCategory)
 }
 export function searchSecondCategoryByName (searchInfo) {
-  return request.post('/secondCategory/searchByName', searchInfo)
+  return request.get('/secondCategory/searchByName?searchInfo=' + searchInfo)
 }
 // 商品API
 export function getProductList () {
@@ -75,5 +78,5 @@ export function insertProduct (product) {
   return request.post('/product/addProduct', product)
 }
 export function searchProductByName (searchInfo) {
-  return request.post('/product/searchByName', searchInfo)
+  return request.get('/product/searchByName?searchInfo=' + searchInfo)
 }

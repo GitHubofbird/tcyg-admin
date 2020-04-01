@@ -99,7 +99,7 @@
   </el-card>
 </template>
 <script>
-import { searchByName, getRuleList, deleteRule, updateRule } from '../../api/index'
+import { searchRuleByName, getRuleList, deleteRule, updateRule } from '../../api/index'
 export default {
   data () {
     return {
@@ -194,7 +194,7 @@ export default {
     },
     // 模糊查询
     handleSearch () {
-      searchByName(this.searchInfo).then(data => {
+      searchRuleByName(this.searchInfo).then(data => {
         if (data.code === 200) {
           this.tableData = data.data
         } else {

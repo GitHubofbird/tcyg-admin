@@ -97,7 +97,7 @@
   </el-card>
 </template>
 <script>
-import { getCategoryList, updateCategory, deleteCategory, searchByName } from '../../api/index'
+import { getCategoryList, updateCategory, deleteCategory, searchCategoryByName } from '../../api/index'
 export default {
   data () {
     return {
@@ -187,7 +187,7 @@ export default {
     },
     // 模糊查询
     handleSearch () {
-      searchByName(this.searchInfo).then(data => {
+      searchCategoryByName(this.searchInfo).then(data => {
         if (data.code === 200) {
           this.tableData = data.data
         } else {

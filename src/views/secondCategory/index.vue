@@ -82,7 +82,8 @@
           <el-select v-model="currentSecondCategory.category"
                      placeholder="请选择一级分类"
                      value-key="cid"
-                     style="width:100%">
+                     style="width:100%"
+                     filterable>
             <el-option v-for="(item,index) in categories"
                        :key="index"
                        :label="item.cname"
@@ -106,7 +107,7 @@
   </el-card>
 </template>
 <script>
-import { searchByName, getSecondCategoryList, deleteSecondCategory, updateSecondCategory, getCategoryList } from '../../api/index'
+import { searchSecondCategoryByName, getSecondCategoryList, deleteSecondCategory, updateSecondCategory, getCategoryList } from '../../api/index'
 export default {
   data () {
     return {
@@ -151,7 +152,7 @@ export default {
     },
     // 模糊查询
     handleSearch () {
-      searchByName(this.searchInfo).then(data => {
+      searchSecondCategoryByName(this.searchInfo).then(data => {
         if (data.code === 200) {
           this.tableData = data.data
         }

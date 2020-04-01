@@ -14,7 +14,8 @@
                   class="box-card-search-row-input">
 
           <el-button slot="append"
-                     icon="el-icon-search"></el-button>
+                     icon="el-icon-search"
+                     @click="handleSearch"></el-button>
         </el-input>
         <el-button type="primary"
                    class="box-card-search-row-btn"
@@ -119,7 +120,8 @@
           <el-select v-model="currentUser.role"
                      placeholder="请选择用户角色"
                      value-key="roleId"
-                     style="width:100%">
+                     style="width:100%"
+                     filterable>
             <el-option v-for="(item,index) in currentRules"
                        :key="index"
                        :label="item.roleName"
@@ -145,7 +147,7 @@
   </el-card>
 </template>
 <script>
-import { findAllUser, updateUser, deleteUser, getRuleList } from '../../api/index'
+import { findAllUser, updateUser, deleteUser, getRuleList, searchUserByName } from '../../api/index'
 export default {
   data () {
     return {
@@ -240,6 +242,13 @@ export default {
           this.currentRules = data.data
         } else {
           this.$message.error('获取角色列表失败!')
+        }
+      })
+    },
+    handleSearch () {
+      searchUserByName(this.searchInfo).then(data => {
+        if (data.code === 200) {
+          this.tableData = data.data
         }
       })
     }
