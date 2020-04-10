@@ -82,14 +82,15 @@
                    :total="tableData.length">
     </el-pagination>
     <!-- 5.Drawer抽屉 -->
-    <el-drawer title="我是标题"
-               :visible.sync="show"
+    <el-drawer :visible.sync="show"
                :with-header="false">
       <el-form :model="currentUser"
                label-width="100px"
                status-icon
                size="medium"
                style="margin:50px 20px"
+               :ref="currentUser"
+               :rules="rules"
                :disabled="disabled">
         <el-form-item prop="username"
                       label="用户账号">
@@ -100,6 +101,12 @@
                       prop="name">
           <el-input v-model="currentUser.name"
                     placeholder="请输入真实姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="用户密码"
+                      prop="password"
+                      v-if="isAdd">
+          <el-input v-model="currentUser.password"
+                    placeholder="请输入初始化密码"></el-input>
         </el-form-item>
         <el-form-item label="用户性别"
                       prop="sex">
@@ -129,12 +136,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="收货地址"
-                      prop="address">
-          <el-input v-model="currentUser.address"
-                    placeholder="请输入收货地址"></el-input>
-        </el-form-item>
-        <el-form-item style="margin-top:240px;float:left"
+
+        <el-form-item style="margin-top:100px;float:left"
                       v-if="!disabled">
           <el-button type="primary"
                      @click="show = false">取消</el-button>
@@ -158,7 +161,14 @@ export default {
       value: true,
       currentUser: {},
       isAdd: false,
-      currentRules: []
+      currentRules: [],
+      rules: {
+        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入初始化密码', trigger: 'blur' }],
+        sex: [{ required: true, message: '请输入用户性别', trigger: 'blur' }],
+        email: [{ required: true, message: '请输入用户邮箱', trigger: 'blur' }],
+        phone: [{ required: true, message: '请输入用户联系方式', trigger: 'blur' }]
+      }
 
     }
   },
@@ -203,6 +213,8 @@ export default {
             this.$message.success(data.data)
             // 删除成功后重新查询用户
             this.findAllUser()
+          } else {
+            this.$message.warning(data.data)
           }
         })
       }).catch(() => {
@@ -214,17 +226,25 @@ export default {
     },
     // 提交表单,用于用户的添加和修改
     submitForm (currentUser) {
-      updateUser(currentUser).then((data) => {
-        // console.log(data.data.data)
-        if (data.code === 200) {
-          this.show = false// 数据提交成功关闭抽屉
-          this.$message.success(data.data)
-          this.findAllUser()
+      this.$refs[currentUser].validate((valid) => {
+        if (valid) {
+          updateUser(currentUser).then((data) => {
+            // console.log(data.data.data)
+            if (data.code === 200) {
+              this.show = false// 数据提交成功关闭抽屉
+              this.$message.success(data.data)
+              this.findAllUser()
+            }
+          })
+        } else {
+          console.log('error submit!!')
+          return false
         }
       })
     },
     // 显示用户详情
     showUserDetails () {
+      this.isAdd = false
       this.show = true
       this.disabled = true
     },

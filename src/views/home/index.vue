@@ -53,13 +53,13 @@
               </el-menu-item-group>
             </el-submenu>
 
-            <el-submenu index="5">
+            <!-- <el-submenu index="5">
               <template slot="title"><i class="el-icon-setting"></i>订单管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
                               index="/order"><i class="el-icon-menu"></i>订单列表</el-menu-item>
               </el-menu-item-group>
-            </el-submenu>
+            </el-submenu> -->
           </el-menu>
         </el-aside>
         <el-main class="home-container-main">
