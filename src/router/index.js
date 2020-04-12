@@ -44,6 +44,10 @@ export default new Router({
           path: '/rule',
           name: 'rule',
           component: () => import('@/views/rule')
+        },
+        {
+          path: '/swagger',
+          component: () => import('@/views/swagger')
         }
       ]
     }

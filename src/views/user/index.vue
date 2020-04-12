@@ -237,7 +237,7 @@ export default {
             }
           })
         } else {
-          console.log('error submit!!')
+          this.$message.warning('请补全用户信息')
           return false
         }
       })
