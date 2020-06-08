@@ -157,7 +157,7 @@
         <el-form-item label="商品图片">
 
           <el-upload class="product-uploader"
-                     action="http://localhost:8080/upload/uploadImg"
+                     action="http://121.36.19.219:8080/upload/uploadImg"
                      :show-file-list="false"
                      :on-success="handleUploadSuccess"
                      :before-upload="beforeUpload">

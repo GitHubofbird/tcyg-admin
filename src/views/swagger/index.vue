@@ -1,7 +1,7 @@
 <template>
   <div class="swaggeer">
     <iframe class="iframe"
-            src="http://localhost:8080/swagger-ui.html"></iframe>
+            src="http://121.36.19.219:8080/swagger-ui.html"></iframe>
   </div>
 </template>
 <script>
