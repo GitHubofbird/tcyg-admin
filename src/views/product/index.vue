@@ -157,7 +157,7 @@
         <el-form-item label="商品图片">
 
           <el-upload class="product-uploader"
-                     action="http://121.36.19.219:8080/upload/uploadImg"
+                     :action="action.localhost"
                      :show-file-list="false"
                      :on-success="handleUploadSuccess"
                      :before-upload="beforeUpload">
@@ -217,6 +217,10 @@ export default {
         description: [
           { required: false, message: '请输入商品描述', trigger: 'blur' }
         ]
+      },
+      action: {
+        'cloud': 'http://121.36.19.219:8080/upload/uploadImg',
+        'localhost': 'http://localhost:8080/upload/uploadImg'
       }
     }
   },
