@@ -9,8 +9,7 @@
              class="login-container-form"
              label-position="top">
       <h2>用户登录</h2>
-      <hr>
-      </hr>
+
       <el-form-item prop="username">
         <el-input prefix-icon="el-icon-user"
                   type="text"

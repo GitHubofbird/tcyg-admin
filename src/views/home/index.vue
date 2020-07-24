@@ -60,13 +60,13 @@
                               index="/order"><i class="el-icon-menu"></i>订单列表</el-menu-item>
               </el-menu-item-group>
             </el-submenu> -->
-            <el-submenu index="6">
+            <!-- <el-submenu index="6">
               <template slot="title"><i class="el-icon-shopping-bag-1"></i>接口管理</template>
               <el-menu-item-group>
                 <el-menu-item class="menu-item"
                               index="/swagger"><i class="el-icon-menu"></i>接口列表</el-menu-item>
               </el-menu-item-group>
-            </el-submenu>
+            </el-submenu> -->
           </el-menu>
         </el-aside>
         <el-main class="home-container-main">
