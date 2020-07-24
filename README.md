@@ -1,6 +1,11 @@
 # demo-admin
 
-> A Vue.js project
+> 商城后台管理系统Vue页面
+
+
+* [商城后台](https://gitee.com/java_superb/graduation_design_background.git)
+
+* [商城客户端](https://gitee.com/java_superb/graduation_design_front_end.git)
 
 ## Build Setup
 
