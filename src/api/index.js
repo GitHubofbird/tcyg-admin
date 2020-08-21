@@ -68,10 +68,13 @@ export function searchSecondCategoryByName (searchInfo) {
 export function getProductList () {
   return request.get('/product/listAll')
 }
-export function deleteProduct (product) {
-  return request.post('/product/deleteProduct', product)
+export function deleteProduct (pid) {
+  return request.delete('/product/deleteProduct?pid=' + pid)
 }
 export function updateProduct (product) {
+  return request.post('/product/updateProduct', product)
+}
+export function addProduct (product) {
   return request.post('/product/addProduct', product)
 }
 export function insertProduct (product) {
